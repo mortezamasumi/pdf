@@ -1,0 +1,78 @@
+{
+    "name": "mortezamasumi/pdf-report",
+    "description": "Helper package to make pdf reports easier",
+    "version": "v1.0",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "laravel",
+        "pdf",
+        "report"
+    ],
+    "homepage": "https://github.com/mortezamasumi/pdf-report",
+    "authors": [
+        {
+            "name": "Morteza Masumi",
+            "email": "morteza.masumi@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.18.1",
+        "orchestra/testbench": "^9.6",
+        "pestphp/pest": "^3.5.1",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "pestphp/pest-plugin-type-coverage": "^3.1",
+        "phpstan/phpstan": "^1.12.7",
+        "rector/rector": "^1.2.8",
+        "symfony/var-dumper": "^7.1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mortezamasumi\\PdfReport\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mortezamasumi\\PdfReport\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mortezamasumi\\PdfReport\\PdfReportServiceProvider"
+            ],
+            "aliases": {
+                "FilamentBase": "Mortezamasumi\\PdfReport\\Facades\\PdfReport"
+            }
+        }
+    },
+    "scripts": {
+        "refacto": "rector",
+        "lint": "pint",
+        "test:refacto": "rector --dry-run",
+        "test:lint": "pint --test",
+        "test:types": "phpstan analyse --ansi",
+        "test:unit": "pest --colors=always --coverage --parallel --min=100",
+        "test": [
+            "@test:refacto",
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ]
+    }
+}
