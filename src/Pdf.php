@@ -1,6 +1,6 @@
 <?php
 
-namespace Mortezamasumi\PdfReport;
+namespace Mortezamasumi\Pdf;
 
 use Elibyy\TCPDF\TCPDF;
 use Illuminate\Http\RedirectResponse;
@@ -8,9 +8,9 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
-use Mortezamasumi\PdfReport\Pages\ReportPage;
+use Mortezamasumi\Pdf\Pages\ReportPage;
 
-class PdfReport extends TCPDF
+class Pdf extends TCPDF
 {
     private string $pdfPath = '';
 
@@ -67,7 +67,7 @@ class PdfReport extends TCPDF
                     <td style="width:40%;text-align:right;" width="40%">' . $footerText . '</td>
                     <td style="width:20%;text-align:right;" width="20%">'
                         . ($showFooterPageNumber
-                               ? __('pdf-report::pdf-report.page_full', [
+                               ? __('pdf::pdf.page_full', [
                                    'page'  => $pdf->getAliasNumPage(),
                                    'total' => $pdf->getAliasNbPages(),
                                ])
@@ -75,7 +75,7 @@ class PdfReport extends TCPDF
                         . '</td>
                     <td style="width:40%;text-align:left;" width="40%">'
                         . ($showFooterDateTime
-                               ? __('pdf-report::pdf-report.report_date', [
+                               ? __('pdf::pdf.report_date', [
                                    'date' => fbDateTime('H:i Y/m/d', now()),
                                ])
                                : '')
@@ -91,7 +91,7 @@ class PdfReport extends TCPDF
                   <td style="width:40%;text-align:left;" width="33%">' . $footerText . '</td>
                   <td style="width:20%;text-align:center;" width="33%">'
                         . ($showFooterPageNumber
-                               ? __('pdf-report::pdf-report.page_full', [
+                               ? __('pdf::pdf.page_full', [
                                    'page'  => $pdf->getAliasNumPage(),
                                    'total' => $pdf->getAliasNbPages(),
                                ])
@@ -99,7 +99,7 @@ class PdfReport extends TCPDF
                         . '</td>
                   <td style="width:40%;text-align:right;" width="33%">'
                         . ($showFooterDateTime
-                               ? __('pdf-report::pdf-report.report_date', [
+                               ? __('pdf::pdf.report_date', [
                                    'date' => now()->format('Y/m/d H:i'),
                                ])
                                : '')

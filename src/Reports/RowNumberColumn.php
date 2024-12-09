@@ -1,5 +1,8 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Reports;
+namespace Mortezamasumi\Pdf\Reports;
 
-class RowNumberColumn extends ReportColumn {}
+class RowNumberColumn extends ReportColumn
+{
+    //
+}

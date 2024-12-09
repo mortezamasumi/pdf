@@ -1,13 +1,14 @@
 <?php
 
-namespace Mortezamasumi\PdfReport;
+namespace Mortezamasumi\Pdf;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Mortezamasumi\PdfReport\Console\PdfReportCommand;
+use Mortezamasumi\Pdf\Console\PdfCommand;
+use Mortezamasumi\Pdf\Pdf;
 use TCPDF_FONTS;
 
-class PdfReportServiceProvider extends ServiceProvider
+class PdfServiceProvider extends ServiceProvider
 {
     public function register()
     {
@@ -16,30 +17,31 @@ class PdfReportServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                PdfReportCommand::class,
-            ]);
-        }
-
         $this->registerFacades();
+        $this->registerCommands();
         $this->registerResources();
         $this->registerTCPDFFonts();
-
-        $this->loadRoutesFrom(__DIR__ . '/../routes/console.php');
     }
 
     protected function registerFacades()
     {
-        $this->app->singleton('PdfReport', function ($app) {
-            return new \Mortezamasumi\PdfReport\PdfReport($app);
-        });
+        $this->app->singleton('Pdf', fn($app) => new Pdf($app));
+    }
+
+    protected function registerCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                PdfCommand::class,
+            ]);
+        }
     }
 
     protected function registerResources(): void
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'pdf-report');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pdf-report');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'pdf');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pdf');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/console.php');
     }
 
     protected function registerTCPDFFonts(): void
@@ -48,7 +50,7 @@ class PdfReportServiceProvider extends ServiceProvider
             $src_dir = dirname(__DIR__) . '/resources/fonts/';
             $dst_dir = dirname(__DIR__) . '/vendor/tecnickcom/tcpdf/fonts/';
         } else {
-            $src_dir = base_path('/vendor/mortezamasumi/pdf-report/resources/fonts/');
+            $src_dir = base_path('/vendor/mortezamasumi/pdf/resources/fonts/');
             $dst_dir = base_path('/vendor/tecnickcom/tcpdf/fonts/');
         }
 

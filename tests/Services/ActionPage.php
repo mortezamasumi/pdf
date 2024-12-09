@@ -11,11 +11,11 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Filament\Forms;
 use Filament\Tables;
-use Mortezamasumi\PdfReport\Actions\ReportAction;
-use Mortezamasumi\PdfReport\Actions\ReportBulkAction;
-use Mortezamasumi\PdfReport\Actions\ReportFormAction;
-use Mortezamasumi\PdfReport\Actions\ReportHeaderAction;
-use Mortezamasumi\PdfReport\Actions\ReportTableAction;
+use Mortezamasumi\Pdf\Actions\ReportAction;
+use Mortezamasumi\Pdf\Actions\ReportBulkAction;
+use Mortezamasumi\Pdf\Actions\ReportFormAction;
+use Mortezamasumi\Pdf\Actions\ReportHeaderAction;
+use Mortezamasumi\Pdf\Actions\ReportTableAction;
 use Tests\Services\Product;
 use Tests\Services\TestTableReporter;
 

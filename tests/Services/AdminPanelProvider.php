@@ -5,13 +5,6 @@ namespace Tests\Services;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Tests\Actions\Fixtures\Pages\Actions;
-use Filament\Tests\Panels\Fixtures\Pages\Settings;
-use Filament\Tests\Panels\Fixtures\Resources\PostCategoryResource;
-use Filament\Tests\Panels\Fixtures\Resources\PostResource;
-use Filament\Tests\Panels\Fixtures\Resources\ProductResource;
-use Filament\Tests\Panels\Fixtures\Resources\UserResource;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -21,8 +14,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Mortezamasumi\PdfReport\Pages\ReportPage;
-use Mortezamasumi\PdfReport\PdfReportPlugin;
+use Mortezamasumi\Pdf\PdfPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -64,7 +56,7 @@ class AdminPanelProvider extends PanelProvider
                        Authenticate::class,
                    ])
                    ->plugins([
-                       PdfReportPlugin::make(),
+                       PdfPlugin::make(),
                    ]);
     }
 }

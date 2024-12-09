@@ -1,6 +1,6 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Concerns;
+namespace Mortezamasumi\Pdf\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

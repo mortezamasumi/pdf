@@ -1,6 +1,6 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Reports;
+namespace Mortezamasumi\Pdf\Reports;
 
 use Filament\Support\Components\Component;
 use Filament\Support\Concerns\CanAggregateRelatedModels;
@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Number;
-use Mortezamasumi\PdfReport\Concerns\CanFormatState;
-use Mortezamasumi\PdfReport\Concerns\HasCellState;
+use Mortezamasumi\Pdf\Concerns\CanFormatState;
+use Mortezamasumi\Pdf\Concerns\HasCellState;
 use Closure;
 
 class ReportColumn extends Component

@@ -1,26 +1,25 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Concerns;
+namespace Mortezamasumi\Pdf\Concerns;
 
 use Filament\Actions\MountableAction;
 use Filament\Facades\Filament;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Facades\FilamentIcon;
-use Filament\Tables\Contracts\HasTable;
 use Filament\Forms;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Mortezamasumi\PdfReport\Actions\ReportAction;
-use Mortezamasumi\PdfReport\Actions\ReportBulkAction;
-use Mortezamasumi\PdfReport\Actions\ReportFormAction;
-use Mortezamasumi\PdfReport\Actions\ReportHeaderAction;
-use Mortezamasumi\PdfReport\Actions\ReportTableAction;
-use Mortezamasumi\PdfReport\Reports\ReportColumn;
-use Mortezamasumi\PdfReport\Reports\Reporter;
+use Mortezamasumi\Pdf\Actions\ReportAction;
+use Mortezamasumi\Pdf\Actions\ReportBulkAction;
+use Mortezamasumi\Pdf\Actions\ReportFormAction;
+use Mortezamasumi\Pdf\Actions\ReportHeaderAction;
+use Mortezamasumi\Pdf\Actions\ReportTableAction;
+use Mortezamasumi\Pdf\Reports\ReportColumn;
+use Mortezamasumi\Pdf\Reports\Reporter;
 use Closure;
 
 trait CanCreateReport
@@ -48,23 +47,19 @@ trait CanCreateReport
         parent::setUp();
 
         $this->label(function (ReportAction|ReportFormAction|ReportBulkAction|ReportTableAction|ReportHeaderAction $action, Component $livewire): string {
-            $label = ($action instanceof ReportAction | $action instanceof ReportFormAction) ? (method_exists($livewire, 'getResource') ? $livewire->getResource()::getPluralModelLabel() : '') : $action->getPluralModelLabel();
-
-            return __('filament-base::filament-base.reporter.label', ['label' => $label]);
+            return __('pdf::pdf.label', ['label' => $action->getActionLabel($livewire)]);
         });
 
         $this->modalHeading(function (ReportAction|ReportFormAction|ReportBulkAction|ReportTableAction|ReportHeaderAction $action, Component $livewire): string {
-            $label = ($action instanceof ReportAction | $action instanceof ReportFormAction) ? (method_exists($livewire, 'getResource') ? $livewire->getResource()::getPluralModelLabel() : '') : $action->getPluralModelLabel();
-
-            return __('filament-base::filament-base.reporter.modal.heading', ['label' => $label]);
+            return __('pdf::pdf.heading', ['heading' => $action->getActionHeading($livewire)]);
         });
 
-        $this->modalSubmitActionLabel(__('filament-base::filament-base.reporter.modal.actions.report.label'));
+        $this->modalSubmitActionLabel(__('pdf::pdf.action'));
 
         $this->groupedIcon('heroicon-m-printer');
 
         $this->form(fn(ReportAction|ReportFormAction|ReportBulkAction|ReportTableAction|ReportHeaderAction $action): array => [
-            Forms\Components\Fieldset::make(__('filament-base::filament-base.reporter.modal.form.columns.label'))
+            Forms\Components\Fieldset::make(__('pdf::pdf.columns'))
                 ->columns(1)
                 ->inlineLabel()
                 ->schema(function () use ($action): array {
@@ -89,41 +84,12 @@ trait CanCreateReport
         ]);
 
         $this->action(function (ReportAction|ReportFormAction|ReportBulkAction|ReportTableAction|ReportHeaderAction $action, array $data, Component $livewire) {
-            $reporter = $action->getReporter();
-
-            if ($livewire instanceof HasTable) {
-                if (!$action->hasForceUseReporterModel()) {
-                    $query = $livewire->getTableQueryForExport();
-                } else {
-                    $query = class_exists($reporter::getModel()) ? $reporter::getModel()::query() : null;
-                }
-            } else {
-                $query = class_exists($reporter::getModel()) ? $reporter::getModel()::query() : null;
-            }
-
-            if ($query) {
-                $query = $reporter::modifyQuery($query);
-                if ($this->modifyQueryUsing) {
-                    $query = $this->evaluate($this->modifyQueryUsing, [
-                        'query' => $query,
-                    ]) ?? $query;
-                }
-
-                $records = $action instanceof ReportBulkAction
-                               ? $action->getRecords()
-                               : (
-                                   $action instanceof ReportTableAction
-                                       ? (collect(Arr::wrap($action->getRecord())))
-                                       : ($query->get())
-                               );
-            } else {
-                $records = collect([]);
-            }
-
             $options = array_merge(
                 $action->getOptions(),
                 Arr::except($data, ['selectedColumns']),
             );
+
+            $reporter = $action->getReporter();
 
             $selectedColumns = collect($reporter::getColumns())->mapWithKeys(fn(ReportColumn $column): array => [$column->getName() => $column->getLabel()])->all();
 
@@ -141,7 +107,7 @@ trait CanCreateReport
             }
 
             $reporter = app($reporter, [
-                'records'         => $records,
+                'records'         => $action->getActionRecords($livewire),
                 'returnUrl'       => $reporter::getReturnUrl() ?: (method_exists($livewire, 'getUrl') ? $livewire->getUrl() : Filament::getCurrentPanel()->getUrl()),
                 'selectedColumns' => $selectedColumns,
                 'options'         => $options,

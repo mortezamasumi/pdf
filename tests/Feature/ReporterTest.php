@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
-use Mortezamasumi\PdfReport\Pages\ReportPage;
+use Mortezamasumi\Pdf\Facades\Pdf;
+use Mortezamasumi\Pdf\Pages\ReportPage;
+use Smalot\PdfParser\Parser;
 use Tests\Services\TestPageReporter;
 use Tests\Services\TestTableReporter;
 
@@ -14,7 +16,7 @@ afterEach(function () {
 });
 
 it('can create pdf instance and store the pdf file in temp folder', function () {
-    $pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create();
+    $pdf = Pdf::create();
 
     $pdf->Output($pdf->getPath(), 'F');
 
@@ -24,7 +26,7 @@ it('can create pdf instance and store the pdf file in temp folder', function () 
 });
 
 it('created pdf contains correct text', function () {
-    $pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create();
+    $pdf = Pdf::create();
 
     $text = 'this is text to insert inside html';
 
@@ -32,7 +34,7 @@ it('created pdf contains correct text', function () {
 
     $pdf->Output($pdf->getPath(), 'F');
 
-    $parser = new \Smalot\PdfParser\Parser();
+    $parser = new Parser();
 
     $parsed = $parser->parseFile($pdf->getPath());
 
@@ -40,7 +42,7 @@ it('created pdf contains correct text', function () {
 });
 
 it('report page embeds pdf url correctly', function () {
-    $pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create();
+    $pdf = Pdf::create();
 
     Livewire::withQueryParams([
         'path'  => $pdf->getEmbedPath(),
@@ -61,7 +63,7 @@ it('can instantiate Reporter class which contains a table', function () {
         'options' => null,
     ]);
 
-    $parser = new \Smalot\PdfParser\Parser();
+    $parser = new Parser();
 
     $parsed = $parser->parseFile($reporter->getPdf()->getPath());
 
@@ -73,7 +75,7 @@ it('can instantiate Reporter class which contains a table', function () {
 it('can instantiate Reporter class which contains a custom page', function () {
     $reporter = app(TestPageReporter::class);
 
-    $parser = new \Smalot\PdfParser\Parser();
+    $parser = new Parser();
 
     $parsed = $parser->parseFile($reporter->getPdf()->getPath());
 

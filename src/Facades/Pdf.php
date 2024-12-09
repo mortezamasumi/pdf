@@ -1,13 +1,13 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Facades;
+namespace Mortezamasumi\Pdf\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class PdfReport extends Facade
+class Pdf extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'PdfReport';
+        return 'Pdf';
     }
 }

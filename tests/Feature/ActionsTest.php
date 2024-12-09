@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
-use Mortezamasumi\PdfReport\Pages\ReportPage;
+use Mortezamasumi\Pdf\Pages\ReportPage;
 use Tests\Services\ActionPage;
 use Tests\Services\Product;
 use Tests\Services\TestComponent;
@@ -28,7 +28,8 @@ it('can create Products table', function () {
 it('can call standalone report action', function () {
     Livewire::test(ActionPage::class)
         ->callAction('standalone-action')
-        ->assertHasNoActionErrors();
+        ->assertHasNoActionErrors()
+        ->assertSee('Report');
 });
 
 it('can call report header action', function () {
@@ -36,7 +37,8 @@ it('can call report header action', function () {
 
     Livewire::test(ActionPage::class)
         ->callTableAction('header-action')
-        ->assertHasNoActionErrors();
+        ->assertHasNoActionErrors()
+        ->assertSee('Report products');
 });
 
 it('can call report table action', function () {
@@ -46,13 +48,15 @@ it('can call report table action', function () {
         // right now can not inject record into action
         // ->callTableAction('table-action', $product)
         ->callTableAction('table-action')
-        ->assertHasNoActionErrors();
+        ->assertHasNoActionErrors()
+        ->assertSee('Report');
 });
 
 it('can call report form action', function () {
     Livewire::test(ActionPage::class)
         ->callFormComponentAction('form-action', 'form-action')
-        ->assertHasNoActionErrors();
+        ->assertHasNoActionErrors()
+        ->assertSee('Report');
 });
 
 it('can call report bulk table action', function () {
@@ -60,5 +64,6 @@ it('can call report bulk table action', function () {
 
     Livewire::test(ActionPage::class)
         ->callTableBulkAction('bulk-action', $products)
-        ->assertHasNoActionErrors();
+        ->assertHasNoActionErrors()
+        ->assertSee('Report products');
 });

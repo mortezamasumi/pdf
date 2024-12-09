@@ -1,6 +1,6 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Enums;
+namespace Mortezamasumi\Pdf\Enums;
 
 enum ReporterFillColor: string
 {

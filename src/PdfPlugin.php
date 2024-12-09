@@ -1,16 +1,16 @@
 <?php
 
-namespace Mortezamasumi\PdfReport;
+namespace Mortezamasumi\Pdf;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Mortezamasumi\PdfReport\Pages\ReportPage;
+use Mortezamasumi\Pdf\Pages\ReportPage;
 
-class PdfReportPlugin implements Plugin
+class PdfPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'pdf-report';
+        return 'pdf';
     }
 
     public function register(Panel $panel): void

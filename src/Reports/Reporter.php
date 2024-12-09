@@ -1,17 +1,17 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Reports;
+namespace Mortezamasumi\Pdf\Reports;
 
 use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Mortezamasumi\PdfReport\Traits\HasPdfReport;
+use Mortezamasumi\Pdf\Traits\HasPdf;
 use Closure;
 
 abstract class Reporter
 {
-    use HasPdfReport;
+    use HasPdf;
     use EvaluatesClosures;
 
     /**

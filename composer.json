@@ -1,5 +1,5 @@
 {
-    "name": "mortezamasumi/pdf-report",
+    "name": "mortezamasumi/pdf",
     "description": "Helper package to make pdf reports easier",
     "version": "v1.0",
     "type": "library",
@@ -10,7 +10,7 @@
         "pdf",
         "report"
     ],
-    "homepage": "https://github.com/mortezamasumi/pdf-report",
+    "homepage": "https://github.com/mortezamasumi/pdf",
     "authors": [
         {
             "name": "Morteza Masumi",
@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mortezamasumi\\PdfReport\\": "src/"
+            "Mortezamasumi\\Pdf\\": "src/"
         }
     },
     "autoload-dev": {
@@ -54,10 +54,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mortezamasumi\\PdfReport\\PdfReportServiceProvider"
+                "Mortezamasumi\\Pdf\\PdfServiceProvider"
             ],
             "aliases": {
-                "PdfReport": "Mortezamasumi\\PdfReport\\Facades\\PdfReport"
+                "Pdf": "Mortezamasumi\\Pdf\\Facades\\Pdf"
             }
         }
     }

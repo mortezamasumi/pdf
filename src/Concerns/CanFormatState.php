@@ -1,6 +1,6 @@
 <?php
 
-namespace Mortezamasumi\PdfReport\Concerns;
+namespace Mortezamasumi\Pdf\Concerns;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

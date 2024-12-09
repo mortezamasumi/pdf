@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('pdf-report:clear')->everyFourHours();
+Schedule::command('pdf:clear')->everyFourHours();

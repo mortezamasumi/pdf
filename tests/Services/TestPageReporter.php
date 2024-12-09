@@ -2,9 +2,9 @@
 
 namespace Tests\Services;
 
-use Mortezamasumi\PdfReport\Reports\ReportColumn;
-use Mortezamasumi\PdfReport\Reports\Reporter;
-use Mortezamasumi\PdfReport\Reports\RowNumberColumn;
+use Mortezamasumi\Pdf\Reports\ReportColumn;
+use Mortezamasumi\Pdf\Reports\Reporter;
+use Mortezamasumi\Pdf\Reports\RowNumberColumn;
 
 class TestPageReporter extends Reporter
 {

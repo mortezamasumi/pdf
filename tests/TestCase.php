@@ -18,7 +18,7 @@ use Filament\SpatieLaravelTranslatablePluginServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\View;
 use Livewire\LivewireServiceProvider;
-use Mortezamasumi\PdfReport\PdfReportServiceProvider;
+use Mortezamasumi\Pdf\PdfServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -64,7 +64,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             // TenancyPanelProvider::class,
             // DomainTenancyPanelProvider::class,
             // LivewireServiceProvider::class,
-            PdfReportServiceProvider::class,
+            PdfServiceProvider::class,
             TestServiceProvider::class
         ];
     }

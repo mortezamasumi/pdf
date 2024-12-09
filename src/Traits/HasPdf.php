@@ -1,20 +1,20 @@
 <?php
 
-namespace Mortezamasumi\Pdfreport\Traits;
+namespace Mortezamasumi\Pdf\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Number;
-use Mortezamasumi\PdfReport\Enums\ReporterFillColor;
-use Mortezamasumi\PdfReport\Enums\ReporterLineStyle;
-use Mortezamasumi\PdfReport\PdfReport;
+use Mortezamasumi\Pdf\Enums\ReporterFillColor;
+use Mortezamasumi\Pdf\Enums\ReporterLineStyle;
+use Mortezamasumi\Pdf\Pdf;
 
-trait HasPdfReport
+trait HasPdf
 {
-    protected PDFReport $pdf;
+    protected Pdf $pdf;
 
     public function createPdf(): void
     {
-        $this->pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create(
+        $this->pdf = \Mortezamasumi\Pdf\Facades\Pdf::create(
             title: $this->getReportTitleText(),
             subtitle: $this->getReportSubTitleText(),
             pdfViewerTitle: $this->getPdfViewerTitle(),
@@ -43,7 +43,7 @@ trait HasPdfReport
         );
     }
 
-    public function getPdf(): PDFReport
+    public function getPdf(): Pdf
     {
         return $this->pdf;
     }
