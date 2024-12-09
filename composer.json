@@ -19,18 +19,18 @@
         }
     ],
     "require": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "elibyy/tcpdf-laravel": "^11.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.18.1",
+        "filament/filament": "^3.2",
+        "laravel/legacy-factories": "^1.4",
+        "livewire/livewire": "^3.5",
         "orchestra/testbench": "^9.6",
-        "pestphp/pest": "^3.5.1",
-        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest": "^3.6",
         "pestphp/pest-plugin-laravel": "^3.0",
-        "pestphp/pest-plugin-type-coverage": "^3.1",
-        "phpstan/phpstan": "^1.12.7",
-        "rector/rector": "^1.2.8",
-        "symfony/var-dumper": "^7.1.6"
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "smalot/pdfparser": "^2.11"
     },
     "autoload": {
         "psr-4": {
@@ -39,10 +39,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Mortezamasumi\\PdfReport\\Tests\\": "tests/"
+            "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
@@ -57,22 +57,8 @@
                 "Mortezamasumi\\PdfReport\\PdfReportServiceProvider"
             ],
             "aliases": {
-                "FilamentBase": "Mortezamasumi\\PdfReport\\Facades\\PdfReport"
+                "PdfReport": "Mortezamasumi\\PdfReport\\Facades\\PdfReport"
             }
         }
-    },
-    "scripts": {
-        "refacto": "rector",
-        "lint": "pint",
-        "test:refacto": "rector --dry-run",
-        "test:lint": "pint --test",
-        "test:types": "phpstan analyse --ansi",
-        "test:unit": "pest --colors=always --coverage --parallel --min=100",
-        "test": [
-            "@test:refacto",
-            "@test:lint",
-            "@test:types",
-            "@test:unit"
-        ]
     }
 }

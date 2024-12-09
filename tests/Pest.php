@@ -1,7 +1,5 @@
 <?php
 
-namespace Tests;
-
 /*
  * |--------------------------------------------------------------------------
  * | Test Case
@@ -13,10 +11,7 @@ namespace Tests;
  * |
  */
 
-pest()
-    ->extend(\Mortezamasumi\PdfReport\Tests\TestCase::class)
-    // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+pest()->extend(Tests\TestCase::class)->in('Feature');
 
 /*
  * |--------------------------------------------------------------------------
