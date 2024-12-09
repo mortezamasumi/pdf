@@ -5,7 +5,9 @@ namespace Mortezamasumi\PdfReport;
 use Elibyy\TCPDF\TCPDF;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use Mortezamasumi\PdfReport\Pages\ReportPage;
 
 class PdfReport extends TCPDF
@@ -129,7 +131,6 @@ class PdfReport extends TCPDF
     public function renderPdf(?string $title = null, ?string $back = null): Redirector|RedirectResponse
     {
         $this->Output($this->getPath(), 'F');
-        // dd('oh 4');
 
         return redirect()->action(
             ReportPage::class,
@@ -149,5 +150,19 @@ class PdfReport extends TCPDF
     public function getPath(): ?string
     {
         return Storage::path("/public/{$this->pdfPath}");
+    }
+
+    public function clear(): void
+    {
+        $tempDir = Storage::path('/public/temp');
+
+        $files = File::files($tempDir);
+
+        foreach ($files as $file) {
+            /** @disregard */
+            if (Carbon::createFromTimestamp(File::lastModified($file))->lt(Carbon::now()->subDay())) {
+                File::delete($file);
+            }
+        }
     }
 }

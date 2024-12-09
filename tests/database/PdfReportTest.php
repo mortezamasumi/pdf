@@ -13,16 +13,16 @@ use Tests\Services\TestTableReporter;
 
 uses(RefreshDatabase::class);
 
-afterAll(function () {
+afterEach(function () {
     if (Storage::exists('/public/temp')) {
         Storage::deleteDirectory('/public/temp');
     }
 });
 
 it('render livewire component successfully', function () {
-    Livewire::withQueryParams(['test' => 'test'])
+    Livewire::withQueryParams(['test' => 'a test message'])
         ->test(TestComponent::class)
-        ->assertSee('test')
+        ->assertSee('a test message')
         ->assertStatus(200);
 });
 
@@ -38,7 +38,7 @@ it('change locale is results render report page correctly', function () {
         ->assertSee(__('pdf-report::pdf-report.report'));
 });
 
-it('can create pdf file', function () {
+it('can create pdf instance and store the pdf file in temp folder', function () {
     $pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create();
 
     $pdf->Output($pdf->getPath(), 'F');
@@ -48,7 +48,7 @@ it('can create pdf file', function () {
     expect($mimeType)->toBe('application/pdf');
 });
 
-it('report page embeds pdf url correctly and pdf contains correct text', function () {
+it('created pdf contains correct text', function () {
     $pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create();
 
     $text = 'this is text to insert inside html';
@@ -62,6 +62,10 @@ it('report page embeds pdf url correctly and pdf contains correct text', functio
     $parsed = $parser->parseFile($pdf->getPath());
 
     expect($parsed->getText())->toContain($text);
+});
+
+it('report page embeds pdf url correctly', function () {
+    $pdf = \Mortezamasumi\PdfReport\Facades\PdfReport::create();
 
     Livewire::withQueryParams([
         'path'  => $pdf->getEmbedPath(),
@@ -146,19 +150,3 @@ it('can call report bulk table action', function () {
         ->callTableBulkAction('bulk-action', $products)
         ->assertHasNoActionErrors();
 });
-
-// it('to see content of report action is correct', function () {
-//     $dom = new DOMDocument();
-//     @$dom->loadHTML($this->get('/admin/pages/action-page')->getContent());
-//     $elements = $dom->getElementsByTagName('embed');
-//     dd($elements);
-//     $result = [];
-//     foreach ($elements as $element) {
-//         $result[] = $dom->saveHTML($element);
-//     }
-
-//     dd($result);
-
-//     dd($this->get('/admin/pages/action-page')->getContent());
-//     $this->get('/admin/pages/action-page')->assertSee('lang');
-// });

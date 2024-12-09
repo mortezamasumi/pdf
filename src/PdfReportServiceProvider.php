@@ -3,9 +3,8 @@
 namespace Mortezamasumi\PdfReport;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Tests\Services\ActionPage;
+use Mortezamasumi\PdfReport\Console\PdfReportCommand;
 use TCPDF_FONTS;
 
 class PdfReportServiceProvider extends ServiceProvider
@@ -17,9 +16,17 @@ class PdfReportServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                PdfReportCommand::class,
+            ]);
+        }
+
         $this->registerFacades();
         $this->registerResources();
         $this->registerTCPDFFonts();
+
+        $this->loadRoutesFrom(__DIR__ . '/../routes/console.php');
     }
 
     protected function registerFacades()
