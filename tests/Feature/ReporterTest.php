@@ -52,7 +52,7 @@ it('report page embeds pdf url correctly', function () {
 it('can instantiate Reporter class which contains a table', function () {
     $reporter = app(TestTableReporter::class, [
         'records' => collect([
-            ['name' => 'this is text for column1'],
+            ['name' => 'this is taext for column1'],
             ['type' => 'this is text for column2'],
         ]),
         'returnUrl' => null,
