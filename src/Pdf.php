@@ -119,8 +119,8 @@ class Pdf extends TCPDF
         $this->AddPage($orientation, $format);
         $this->SetRTL($rtl);
 
-        if (!Storage::exists('/public/temp')) {
-            Storage::makeDirectory('/public/temp');
+        if (!Storage::disk('public')->exists('/temp')) {
+            Storage::disk('public')->makeDirectory('/temp');
         }
 
         $this->pdfPath = str('temp/')->append(str()->random(30))->append('.pdf')->toString();
@@ -149,18 +149,22 @@ class Pdf extends TCPDF
 
     public function getPath(): ?string
     {
-        return Storage::path("/public/{$this->pdfPath}");
+        return Storage::disk('public')->path("/{$this->pdfPath}");
     }
 
-    public function clear(): void
+    public function clear(int $days): void
     {
-        $tempDir = Storage::path('/public/temp');
+        if (!Storage::disk('public')->exists('/temp')) {
+            return;
+        }
+
+        $tempDir = Storage::disk('public')->path('/temp');
 
         $files = File::files($tempDir);
 
         foreach ($files as $file) {
             /** @disregard */
-            if (Carbon::createFromTimestamp(File::lastModified($file))->lt(Carbon::now()->subDay())) {
+            if ($days === 0 || Carbon::createFromTimestamp(File::lastModified($file))->lt(Carbon::now()->subDays($days))) {
                 File::delete($file);
             }
         }

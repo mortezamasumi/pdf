@@ -13,6 +13,6 @@ class PdfCommand extends Command
 
     public function handle(): void
     {
-        Pdf::clear();
+        Pdf::clear(days: 1);
     }
 }

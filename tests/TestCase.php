@@ -92,6 +92,22 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             'root'   => __DIR__ . '/fixtures',
         ]);
 
+        // $app['config']->set('filesystems.disks', [
+        //     'local' => [
+        //         'driver' => 'local',
+        //         'root'   => storage_path('app/private'),
+        //         'serve'  => true,
+        //         'throw'  => false,
+        //     ],
+        //     'public' => [
+        //         'driver'     => 'local',
+        //         'root'       => storage_path('app/public'),
+        //         'url'        => env('APP_URL') . '/storage',
+        //         'visibility' => 'public',
+        //         'throw'      => false,
+        //     ]
+        // ]);
+
         // $app['config']->set('app.locale', 'fa');
     }
 

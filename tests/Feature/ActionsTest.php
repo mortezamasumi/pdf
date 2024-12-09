@@ -1,22 +1,15 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
-use Mortezamasumi\Pdf\Pages\ReportPage;
+use Mortezamasumi\Pdf\Facades\Pdf;
 use Tests\Services\ActionPage;
 use Tests\Services\Product;
-use Tests\Services\TestComponent;
-use Tests\Services\TestPageReporter;
-use Tests\Services\TestTableReporter;
 
 uses(RefreshDatabase::class);
 
 afterEach(function () {
-    if (Storage::exists('/public/temp')) {
-        Storage::deleteDirectory('/public/temp');
-    }
+    Pdf::clear(days: 0);
 });
 
 it('can create Products table', function () {
